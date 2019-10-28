@@ -32,4 +32,11 @@ public class GitHubUserDTO {
         this.name = name;
     }
 
-}
+	@Override
+	public String toString() {
+		return "GitHubUserDTO [bio=" + bio + ", id=" + id + ", name=" + name + "]";
+	}
+
+
+    }
+
