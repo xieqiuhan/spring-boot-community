@@ -2,6 +2,8 @@ package cn.edith.demo.community.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import cn.edith.demo.community.mapper.UserMapper;
+import cn.edith.demo.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,8 @@ import cn.edith.demo.community.dto.AccesstokenDTO;
 
 import cn.edith.demo.community.dto.GitHubUserDTO;
 import cn.edith.demo.community.provider.GitHubProvider;
+
+import java.util.UUID;
 
 @Controller
 public class AuthorizeController {
@@ -26,6 +30,9 @@ public class AuthorizeController {
 
     @Value("${github.redirect.url}")
     private String redirectUrl;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @GetMapping("/callback")
     /**
@@ -46,6 +53,13 @@ public class AuthorizeController {
         String token = gitHubProvider.getAccessToken(accessTokenDTO);
         GitHubUserDTO userMsg = gitHubProvider.getUser(token);
         if (userMsg != null) {
+            User user = new User();
+            user.setName(userMsg.getName());
+            user.setToken(UUID.randomUUID().toString());
+            user.setAccountId(String.valueOf(userMsg.getId()));
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(user.getGmtCreate());
+            userMapper.insert(user);
             // 登陆成功，写cookie和session
             request.getSession().setAttribute("user", userMsg);
             return "redirect:/";
