@@ -1,6 +1,8 @@
 package cn.edith.demo.community.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import cn.edith.demo.community.mapper.UserMapper;
 import cn.edith.demo.community.model.User;
@@ -43,7 +45,7 @@ public class AuthorizeController {
      * @return
      */
     public String callback(@RequestParam(name = "code") String code, @RequestParam(name = "state") String state,
-            HttpServletRequest request) {
+                           HttpServletRequest request, HttpServletResponse response) {
         AccesstokenDTO accessTokenDTO = new AccesstokenDTO();
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setClient_secret(clientSecret);
@@ -54,16 +56,16 @@ public class AuthorizeController {
         GitHubUserDTO userMsg = gitHubProvider.getUser(token);
         if (userMsg != null) {
             User user = new User();
+            String tokenT = UUID.randomUUID().toString();
             user.setName(userMsg.getName());
-            user.setToken(UUID.randomUUID().toString());
+            user.setToken(tokenT);
             user.setAccountId(String.valueOf(userMsg.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
-            // 登陆成功，写cookie和session
-            request.getSession().setAttribute("user", userMsg);
+            // 登陆成功，写cookie
+            response.addCookie(new Cookie("token",tokenT));
             return "redirect:/";
-
         } else {
             // 登陆失败，重新登陆
             return "redirect:/";
