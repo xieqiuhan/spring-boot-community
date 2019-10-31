@@ -10,6 +10,8 @@
 
 [flyWay](https://flywaydb.org/getstarted/)
 
+[lombok](https://projectlombok.org/)
+
 ## 工具
 
 [Git](https://git-scm.com/download)   
