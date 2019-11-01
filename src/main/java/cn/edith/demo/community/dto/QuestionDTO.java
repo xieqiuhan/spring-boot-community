@@ -1,9 +1,10 @@
-package cn.edith.demo.community.model;
+package cn.edith.demo.community.dto;
 
+import cn.edith.demo.community.model.User;
 import lombok.Data;
 
 
-public class Question {
+public class QuestionDTO {
     private Integer id;
     private String title;
     private String description;
@@ -14,6 +15,7 @@ public class Question {
     private Integer commentCount;
     private Integer viewCount;
     private Integer likeCount;
+    private User user;
 
     public Integer getId() {
         return id;
@@ -93,5 +95,13 @@ public class Question {
 
     public void setLikeCount(Integer likeCount) {
         this.likeCount = likeCount;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

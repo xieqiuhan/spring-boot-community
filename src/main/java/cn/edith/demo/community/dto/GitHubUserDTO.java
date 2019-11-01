@@ -1,23 +1,18 @@
 package cn.edith.demo.community.dto;
 
+import lombok.Data;
+
 /**
  * 
  */
+@Data
 public class GitHubUserDTO {
-    private String name;
-    private Long id;
-    private String bio;
-
     public String getName() {
         return name;
     }
 
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -28,15 +23,25 @@ public class GitHubUserDTO {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getBio() {
+        return bio;
     }
 
-	@Override
-	public String toString() {
-		return "GitHubUserDTO [bio=" + bio + ", id=" + id + ", name=" + name + "]";
-	}
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
+    public String getAvatar_url() {
+        return avatar_url;
+    }
 
+    public void setAvatar_url(String avatar_url) {
+        this.avatar_url = avatar_url;
+    }
+
+    private String name;
+    private Long id;
+    private String bio;
+    private String avatar_url;
     }
 
