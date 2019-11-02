@@ -39,7 +39,7 @@ public class AuthorizeController {
     @GetMapping("/callback")
     /**
      * 接收参数（来自url）
-     * 
+     *
      * @param code
      * @param state
      * @return
@@ -65,13 +65,13 @@ public class AuthorizeController {
             user.setAvatarUrl(userMsg.getAvatar_url());
             userMapper.insert(user);
             // 登陆成功，写cookie
-            response.addCookie(new Cookie("token",tokenT));
+            response.addCookie(new Cookie("token", tokenT));
             return "redirect:/";
         } else {
             // 登陆失败，重新登陆
             return "redirect:/";
         }
-    
+
 
     }
 

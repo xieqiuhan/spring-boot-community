@@ -3,7 +3,7 @@ package cn.edith.demo.community.dto;
 import lombok.Data;
 
 /**
- * 
+ *
  */
 @Data
 public class GitHubUserDTO {
@@ -43,5 +43,5 @@ public class GitHubUserDTO {
     private Long id;
     private String bio;
     private String avatar_url;
-    }
+}
 
