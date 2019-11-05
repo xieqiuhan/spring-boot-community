@@ -98,4 +98,20 @@ public class QuestionService {
         BeanUtils.copyProperties(question,questionDTO);
         return questionDTO;
     }
+
+    public void createOrUpdate(Question question) {
+        if(question.getId() == null){
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.create(question);
+
+        }else{
+            System.out.println(question.getGmtCreate());
+            question.setGmtCreate(question.getGmtCreate());
+            question.setGmtModified(System.currentTimeMillis());
+            questionMapper.update(question);
+
+        }
+
+    }
 }

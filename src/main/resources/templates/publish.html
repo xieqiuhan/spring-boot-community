@@ -22,6 +22,7 @@
                 <hr>
 
                 <form action="http://localhost:8080/publish" method = "post" id="form">
+                    <input type="hidden" name ="id" th:value="${id}">
                     <div class="form-group">
                         <label for="title">Title(describe the question)</label>
                         <input type="text" class="form-control" name="title" id="title" placeholder="title" th:value="${title}">
@@ -30,7 +31,7 @@
                     <div class="form-group">
                         <label for="title">Details about the Question</label>
                         <textarea cols="30" rows="20"
-                                name="description" class="form-control" id="description" th:value="${description}" ></textarea>
+                                name="description" class="form-control" id="description" th:text="${description}" ></textarea>
                     </div>
 
                     <div class="form-group">
