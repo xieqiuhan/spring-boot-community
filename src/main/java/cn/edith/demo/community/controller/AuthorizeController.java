@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.edith.demo.community.mapper.UserMapper;
 import cn.edith.demo.community.model.User;
+import cn.edith.demo.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -33,8 +34,9 @@ public class AuthorizeController {
     @Value("${github.redirect.url}")
     private String redirectUrl;
 
+
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @GetMapping("/callback")
     /**
@@ -60,10 +62,8 @@ public class AuthorizeController {
             user.setName(userMsg.getName());
             user.setToken(tokenT);
             user.setAccountId(String.valueOf(userMsg.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(userMsg.getAvatar_url());
-            userMapper.insert(user);
+            userService.createOrUpdate(user);
             // 登陆成功，写cookie
             response.addCookie(new Cookie("token", tokenT));
             return "redirect:/";
@@ -73,6 +73,17 @@ public class AuthorizeController {
         }
 
 
+    }
+
+    @GetMapping("/logout")
+    public String logout( HttpServletRequest request, HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token",null);
+        cookie.setMaxAge(0);
+       // cookie;
+        response.addCookie(cookie);
+
+        return "redirect:/";
     }
 
 }

@@ -1,12 +1,14 @@
 package cn.edith.demo.community.mapper;
 
 
+import cn.edith.demo.community.dto.QuestionDTO;
 import cn.edith.demo.community.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 
 import java.util.List;
@@ -29,4 +31,7 @@ public interface QuestionMapper {
 
     @Select("select count(1) from question where creator = #{id}")
     Integer countByUserId(@Param(value = "id") Integer id);
+
+    @Select("select * from question  where id = #{id} " )
+    Question getById(@Param(value = "id") Integer id);
 }
