@@ -21,5 +21,11 @@
 [Git](https://git-scm.com/download)   
 [BootStrap](https://v3.bootcss.com/components)
 
+## 代码
+```bash
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+
+```
+
 
 
