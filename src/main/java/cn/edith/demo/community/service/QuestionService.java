@@ -2,10 +2,14 @@ package cn.edith.demo.community.service;
 
 import cn.edith.demo.community.dto.PaginationDTO;
 import cn.edith.demo.community.dto.QuestionDTO;
+import cn.edith.demo.community.exception.CustomizeErrorCode;
+import cn.edith.demo.community.exception.CustomizeException;
 import cn.edith.demo.community.mapper.QuestionMapper;
 import cn.edith.demo.community.mapper.UserMapper;
 import cn.edith.demo.community.model.Question;
+import cn.edith.demo.community.model.QuestionExample;
 import cn.edith.demo.community.model.User;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +28,8 @@ public class QuestionService {
     public PaginationDTO list(Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
-        Integer totalCount = questionMapper.count();
+
+        Integer totalCount =(int) questionMapper.countByExample(new QuestionExample());
         if (totalCount % size == 0) {
             totalPage = totalCount / size;
         } else {
@@ -40,7 +45,7 @@ public class QuestionService {
         paginationDTO.setPagination(totalPage, page);
 
         Integer offset = size * (page - 1);
-        List<Question> questions = questionMapper.list(offset, size);
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(offset,size));
         List<QuestionDTO> questionDTOLists = new ArrayList<>();
 
         for (Question question : questions) {
@@ -48,6 +53,7 @@ public class QuestionService {
             User user = userMapper.selectByPrimaryKey(question.getCreator());
 
             QuestionDTO questionDTO = new QuestionDTO();
+          //  questionDTO.setId(question.getId());
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(user);
             questionDTOLists.add(questionDTO);
@@ -60,7 +66,10 @@ public class QuestionService {
     public PaginationDTO list(Long id, Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
-        Integer totalCount = questionMapper.countByUserId(id);
+        QuestionExample example = new QuestionExample();
+        example.createCriteria().andCreatorEqualTo(id);
+        Integer totalCount =(int) questionMapper.countByExample(example);
+
         if (totalCount % size == 0) {
             totalPage = totalCount / size;
         } else {
@@ -76,7 +85,10 @@ public class QuestionService {
         paginationDTO.setPagination(totalPage, page);
 
         Integer offset = size * (page - 1);
-        List<Question> questions = questionMapper.listByuserId(id, offset, size);
+        QuestionExample exampleList = new QuestionExample();
+
+        exampleList.createCriteria().andCreatorEqualTo(id);
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(exampleList,new RowBounds(offset,size));
         List<QuestionDTO> questionDTOLists = new ArrayList<>();
 
         for (Question question : questions) {
@@ -91,7 +103,10 @@ public class QuestionService {
     }
 
     public QuestionDTO getById(Long id) {
-        Question question = questionMapper.getById(id);
+        Question question = questionMapper.selectByPrimaryKey(id);
+        if(question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         User user = userMapper.selectByPrimaryKey(question.getCreator());
         QuestionDTO questionDTO = new QuestionDTO();
         questionDTO.setUser(user);
@@ -103,13 +118,20 @@ public class QuestionService {
         if(question.getId() == null){
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
-            questionMapper.create(question);
+            questionMapper.insert(question);
 
         }else{
-            System.out.println(question.getGmtCreate());
-            question.setGmtCreate(question.getGmtCreate());
-            question.setGmtModified(System.currentTimeMillis());
-            questionMapper.update(question);
+            Question updateQuestion = new Question();
+            updateQuestion.setGmtModified(System.currentTimeMillis());
+            updateQuestion.setTitle(question.getTitle());
+            updateQuestion.setDescription(question.getDescription());
+            updateQuestion.setTag(question.getTag());
+            QuestionExample exampleQ = new QuestionExample();
+            exampleQ.createCriteria().andIdEqualTo(question.getId());
+            int update = questionMapper.updateByExampleSelective(updateQuestion,exampleQ);
+            if(update != 1){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
 
         }
 

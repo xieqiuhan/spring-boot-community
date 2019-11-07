@@ -23,7 +23,7 @@ public class PublishController {
     @Autowired
     private QuestionService questionService;
 
-    @GetMapping("/publish{id}")
+    @GetMapping("/publish/{id}")
     public String edit(@PathVariable(name = "id") Long id, Model model){
         QuestionDTO question = questionService.getById(id);
         model.addAttribute("title", question.getTitle());
