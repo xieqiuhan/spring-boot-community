@@ -31,3 +31,9 @@
 .jumbotron{
     margin:50px;
 }
+
+.btn-right{
+    float:right;
+    margin-bottom: 10px;
+}
+

@@ -1,12 +1,17 @@
 package cn.edith.demo.community.service;
 
+
+
 import cn.edith.demo.community.mapper.UserMapper;
+
 import cn.edith.demo.community.model.User;
 import cn.edith.demo.community.model.UserExample;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 @Service
 public class UserService {
@@ -21,7 +26,7 @@ public class UserService {
       if(users.size() == 0){
           user.setGmtCreate(System.currentTimeMillis());
           user.setGmtModified(user.getGmtCreate());
-          userMapper.insert(user);
+          userMapper.insertSelective(user);
       }else{
           User dbUser = users.get(0);
           User updateUser = new User();

@@ -4,7 +4,9 @@ import cn.edith.demo.community.dto.PaginationDTO;
 import cn.edith.demo.community.dto.QuestionDTO;
 import cn.edith.demo.community.exception.CustomizeErrorCode;
 import cn.edith.demo.community.exception.CustomizeException;
+import cn.edith.demo.community.mapper.QuestionExtMapper;
 import cn.edith.demo.community.mapper.QuestionMapper;
+import cn.edith.demo.community.mapper.UserExtMapper;
 import cn.edith.demo.community.mapper.UserMapper;
 import cn.edith.demo.community.model.Question;
 import cn.edith.demo.community.model.QuestionExample;
@@ -22,8 +24,12 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
+
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     public PaginationDTO list(Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
@@ -53,7 +59,6 @@ public class QuestionService {
             User user = userMapper.selectByPrimaryKey(question.getCreator());
 
             QuestionDTO questionDTO = new QuestionDTO();
-          //  questionDTO.setId(question.getId());
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(user);
             questionDTOLists.add(questionDTO);
@@ -118,7 +123,7 @@ public class QuestionService {
         if(question.getId() == null){
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
-            questionMapper.insert(question);
+            questionMapper.insertSelective(question);
 
         }else{
             Question updateQuestion = new Question();
@@ -134,6 +139,14 @@ public class QuestionService {
             }
 
         }
+
+    }
+
+    public void incView(Long id) {
+        Question question = new Question();
+        question.setViewCount(1);
+        question.setId(id);
+        questionExtMapper.incView(question);
 
     }
 }

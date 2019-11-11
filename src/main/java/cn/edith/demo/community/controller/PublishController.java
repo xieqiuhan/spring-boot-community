@@ -70,6 +70,9 @@ public class PublishController {
         question.setTag(tag);
         question.setCreator((Long)user.getId());
         question.setId(id);
+//        question.setViewCount(0);
+//        question.setCommentCount(0);
+//        question.setLikeCount(0);
         questionService.createOrUpdate(question);
 
         return "redirect:/";
