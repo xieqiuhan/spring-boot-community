@@ -17,7 +17,17 @@ $(document).ready(function(){
                if(data.code == 200){
                    $("#comment_section").hide();
                }else{
-                   alert(data.message);
+                   if(data.code == 2003){
+                       var isAccepted = confirm(data.message);
+                       if(isAccepted){
+                           window.open("https://github.com/login/oauth/authorize?client_id=6119f2bfd354c366ccdc&redirect_uri=http://localhost:8080/callback&scope=user&state=1");
+                           window.localStorage.setItem("closable", true);
+                       }
+
+                   }else{
+                       alert(data.message);
+                   }
+
                }
 
                console.log(data);
