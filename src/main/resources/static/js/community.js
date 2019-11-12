@@ -2,6 +2,10 @@ $(document).ready(function(){
    $("#replay").click(function(){
        var questionId = $("#question-id").val();
        var context = $("#commentText").val();
+       if(!context){
+           alert("评论内容不能为空----来自前端的提醒");
+           return;
+       }
       var data = {
            "parentId":questionId,
            "content":context,
@@ -15,6 +19,7 @@ $(document).ready(function(){
            data: JSON.stringify(data),
            success: function(data){
                if(data.code == 200){
+                   window.location.reload();
                    $("#comment_section").hide();
                }else{
                    if(data.code == 2003){
