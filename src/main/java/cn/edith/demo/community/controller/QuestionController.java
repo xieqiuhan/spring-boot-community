@@ -1,8 +1,8 @@
 package cn.edith.demo.community.controller;
 
-import cn.edith.demo.community.dto.CommentCreateDTO;
 import cn.edith.demo.community.dto.CommentDTO;
 import cn.edith.demo.community.dto.QuestionDTO;
+import cn.edith.demo.community.enums.CommentTypeEnum;
 import cn.edith.demo.community.service.CommentService;
 import cn.edith.demo.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class QuestionController {
     public String question(@PathVariable(name = "id") Long id,
                            Model model){
       QuestionDTO questionDTO = questionServer.getById(id);
-      List<CommentDTO> commentDTOs = commentService.listByQuestionId(id);
+      List<CommentDTO> commentDTOs = commentService.listByTargetId(id, CommentTypeEnum.QUESTION.getType());
       model.addAttribute("comments",commentDTOs);
 
       //增加累计阅读数

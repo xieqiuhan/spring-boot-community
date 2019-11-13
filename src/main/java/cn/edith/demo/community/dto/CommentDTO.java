@@ -1,7 +1,9 @@
 package cn.edith.demo.community.dto;
 
 import cn.edith.demo.community.model.User;
+import lombok.Data;
 
+@Data
 public class CommentDTO {
 
     private Long id;
@@ -17,6 +19,17 @@ public class CommentDTO {
     private Long gmtModified;
 
     private Long likeCount;
+
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    private Integer commentCount;
 
     private String content;
     private User user;
