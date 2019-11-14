@@ -114,4 +114,30 @@ $(document).ready(function(){
             dataType: "json"
         });
     }
+
+    /*
+     选择标签
+     */
+    selectTag = function(e) {
+        var value = e.getAttribute("data-tag");
+     //   console.log(value);
+        var previous = $("#tag").val();
+     //  console.log(previous);
+        if (previous.indexOf(value) == -1) {
+            if (previous) {
+                $("#tag").val(previous + "," + value);
+            } else {
+                $("#tag").val(value);
+            }
+        }
+    }
+
+    /*
+    展示標籤頁
+     */
+    $("#tag").click(function(){
+        $("#select-tag").show();
+    })
+
+
 });

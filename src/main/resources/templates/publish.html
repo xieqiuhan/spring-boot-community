@@ -7,63 +7,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> Publish Question </title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css" />
-    <link  rel = "stylesheet" href="/static/css/community.css"/>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/static/css/community.css"/>
 </head>
 
 <body>
 <div th:insert="navigation :: nav"></div>
-    <div class="container-fluid main">
-        <div class="row">
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
 
-                <h3> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>publish</h3>
-                <hr>
+            <h3><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>publish</h3>
+            <hr>
 
-                <form action="http://localhost:8080/publish" method = "post" id="form">
-                    <input type="hidden" name ="id" th:value="${id}">
-                    <div class="form-group">
-                        <label for="title">Title(describe the question)</label>
-                        <input type="text" class="form-control" name="title" id="title" placeholder="title" th:value="${title}">
+            <form action="http://localhost:8080/publish" method="post" id="form">
+                <input type="hidden" name="id" th:value="${id}">
+                <div class="form-group">
+                    <label for="title">Title(describe the question)</label>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="title"
+                           th:value="${title}">
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Details about the Question</label>
+                    <textarea cols="30" rows="20"
+                              name="description" class="form-control" id="description"
+                              th:text="${description}"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="tag">Add tag</label>
+                    <input type="text" class="form-control" id="tag" name="tag" placeholder="添加标签，以，分隔"
+                           autocomplete="off"
+                           th:value="${tag}">
+                    <div id = "select-tag" class="publish-tag-tap">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" th:each="selectTag,selectTagStat : ${tags}" th:class="${selectTagStat.first?'active':''}"><a th:href="${'#'+ selectTag.categoryName}" aria-controls="home" role="tab"
+                                                                          data-toggle="tab" th:text="${selectTag.categoryName}"></a></li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" th:each="selectTag,selectTagStat : ${tags}" th:class="${selectTagStat.first?'tab-pane active':'tab-pane'}" th:id="${selectTag.categoryName}" >
+                                    <span style="word-wrap: break-spaces;" class="label label-info tag-style " th:each="selectTagname : ${selectTag.tags}" onclick="selectTag(this)" th:data-tag="${selectTagname}" th:text="${selectTagname}">
+                                    </span>
+                                </div>
+                            </div>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="title">Details about the Question</label>
-                        <textarea cols="30" rows="20"
-                                name="description" class="form-control" id="description" th:text="${description}" ></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tag">Add tag</label>
-                        <input type="text" class="form-control" id="tag" name = "tag" placeholder="添加标签，以，分隔" th:value="${tag}">
-                    </div>
-
-                    <div class="form-group">
-                        <div  th:if="${error != null}">
+                <div class="form-group">
+                    <div th:if="${error != null}">
                         <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" th:text="${error}"></div>
-
-                        </div>
-                    <button type="submit" class="btn btn-success publish col-lg-3 col-md-12 col-sm-12 col-xs-12">Publish</button>
                     </div>
-                </form>
+                    <button type="submit" class="btn btn-success publish col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        Publish
+                    </button>
+                </div>
+            </form>
 
-            </div>
-            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-              <h3>发起问题指南</h3>
-                <ul>
-                    <li>问题标题：请用精简的语言描述您发布的问题，不超过25字。</li>
-                    <li>问题补充：详细补充您的问题内容，并确保问题描述清晰直观，并提供一些相关建议。
-                    </li>
-                    <li>选择标签：选择一个或者多个标签，用逗号分隔，每个标签不超过10个字</li>
-                </ul>
-            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3>发起问题指南</h3>
+            <ul>
+                <li>问题标题：请用精简的语言描述您发布的问题，不超过25字。</li>
+                <li>问题补充：详细补充您的问题内容，并确保问题描述清晰直观，并提供一些相关建议。
+                </li>
+                <li>选择标签：选择一个或者多个标签，用逗号分隔，每个标签不超过10个字</li>
+            </ul>
         </div>
     </div>
+</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+<script src="/static/js/community.js"></script>
 
 </body>
 

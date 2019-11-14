@@ -69,4 +69,33 @@
      border:1px solid #eee;
      padding-top:15px;
  }
+.tag-style{
+    margin-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.tag{
+    font-size: 11px;
+}
+.question-related{
+    list-style: none;
+    font-size: 13px;
+    line-height:30px;
+    padding-left:0;
+}
+
+.wechat{
+    width:50%;
+}
+.publish-tag-tap{
+    display:none;
+    margin-top:10px;
+}
+
+.publish-tag-tap .label-info{
+    margin-right:10px;
+    white-space: normal;
+    display: inline-block;
+    margin-top:7px;
+}
 
