@@ -2,6 +2,8 @@ package cn.edith.demo.community.service;
 
 import cn.edith.demo.community.dto.CommentDTO;
 import cn.edith.demo.community.enums.CommentTypeEnum;
+import cn.edith.demo.community.enums.NotificationStatusEnum;
+import cn.edith.demo.community.enums.NotificationTypeEnum;
 import cn.edith.demo.community.exception.CustomizeErrorCode;
 import cn.edith.demo.community.exception.CustomizeException;
 import cn.edith.demo.community.mapper.*;
@@ -27,12 +29,13 @@ public class CommentService {
     private QuestionExtMapper questionExtMapper;
     @Autowired
     private UserMapper userMapper;
-
     @Autowired
     private CommentExtMapper commentExtMapper;
+    @Autowired
+    private NotificationMapper notificationMapper;
 
     @Transactional
-    public void insert(Comment comment) {
+    public void insert(Comment comment, User commentator) {
         if(comment.getParentId() == null || comment.getParentId() == 0){
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
         }
@@ -46,12 +49,19 @@ public class CommentService {
                throw new CustomizeException((CustomizeErrorCode.COMMENT_NOT_FOUND));
            }
 
+            Question dbQuestion = questionMapper.selectByPrimaryKey(dbComment.getParentId());
+            if(dbQuestion == null){
+                throw new CustomizeException((CustomizeErrorCode.QUESTION_NOT_FOUND));
+            }
            commentMapper.insertSelective(comment);
-           //z增加评论数
+           //增加评论数
             Comment commentParent = new Comment();
             commentParent.setId(comment.getParentId());
             commentParent.setCommentCount(1);
            commentExtMapper.incCommentCount(commentParent);
+           //创建评论通知
+            createNotify(comment, dbComment.getCommentator(), commentator.getName(), dbQuestion.getTitle(), NotificationTypeEnum.REPLY_COMMENT, dbQuestion.getId());
+
         }else{
             //回复问题
             Question dbQuestion = questionMapper.selectByPrimaryKey(comment.getParentId());
@@ -61,8 +71,24 @@ public class CommentService {
                 dbQuestion.setCommentCount(1);
                 commentMapper.insertSelective(comment);
                 questionExtMapper.incCommentCount(dbQuestion);
+                //创建回复通知
+                createNotify(comment, dbQuestion.getCreator(),commentator.getName(), dbQuestion.getTitle(),NotificationTypeEnum.REPLY_QUESTION, dbQuestion.getId());
+
             }
         }
+    }
+
+    private void createNotify(Comment comment, Long commentator, String notifierName, String outerTitle, NotificationTypeEnum notificationType, Long outerid) {
+        Notification notification = new Notification();
+        notification.setGmtCreate(System.currentTimeMillis());
+        notification.setType(notificationType.getType());
+        notification.setOuterid(outerid);
+        notification.setNotifier(comment.getCommentator());
+        notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
+        notification.setReceiver(commentator);
+        notification.setNotifierName(notifierName);
+        notification.setOuterTitle(outerTitle);
+        notificationMapper.insert(notification);
     }
 
     public List<CommentDTO> listByTargetId(Long id, Integer type) {

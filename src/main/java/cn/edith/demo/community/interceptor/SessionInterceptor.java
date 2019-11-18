@@ -3,6 +3,7 @@ package cn.edith.demo.community.interceptor;
 import cn.edith.demo.community.mapper.UserMapper;
 import cn.edith.demo.community.model.User;
 import cn.edith.demo.community.model.UserExample;
+import cn.edith.demo.community.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,6 +18,8 @@ import java.util.List;
 public class SessionInterceptor implements HandlerInterceptor {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private NotificationService notificationService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -31,6 +34,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                     List<User> users = userMapper.selectByExample(userExample);
                     if (users.size() != 0) {
                         request.getSession().setAttribute("user", users.get(0));
+                        Long unReadCount = notificationService.unreadCount(users.get(0).getId());
+                        request.getSession().setAttribute("unReadNotification",unReadCount);
                     }
                     break;
                 }
