@@ -10,10 +10,14 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css" />
     <link rel = "stylesheet" href="/static/css/community.css"/>
+    <link rel="stylesheet" href="/static/css/editormd.preview.css" />
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
     <script src="/static/js/moment.js"></script>
     <script src="/static/js/community.js"></script>
+    <script src="/static/js/editormd.js"></script>
+    <script src="/static/js/lib/marked.min.js"></script>
+    <script src="/static/js/lib/prettify.min.js"></script>
 </head>
 
 <body>
@@ -32,8 +36,17 @@
               </span>
             <hr>
                 <!--内容-->
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${questions.description}"></div>
-            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 0;">
+                <div id="question-view"  class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <textarea style="display:none;" th:text="${questions.description}">### Hello world!</textarea>
+                </div>
+                <script type="text/javascript">
+                    $(function() {
+                       editormd.markdownToHTML("question-view", {
+
+                        });
+                    });
+                </script>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 0;">
                 <!--标签-->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <span class="label label-info tag-style" th:each="tag:${questions.tag.split(',')}">
