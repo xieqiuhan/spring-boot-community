@@ -78,14 +78,19 @@ public class CommentService {
         }
     }
 
-    private void createNotify(Comment comment, Long commentator, String notifierName, String outerTitle, NotificationTypeEnum notificationType, Long outerid) {
+    private void createNotify(Comment comment, Long receiver, String notifierName, String outerTitle, NotificationTypeEnum notificationType, Long outerid) {
+      //  System.out.println(receiver.equals(comment.getCommentator()));
+        if(receiver.equals(comment.getCommentator())){
+
+            return;
+        }
         Notification notification = new Notification();
         notification.setGmtCreate(System.currentTimeMillis());
         notification.setType(notificationType.getType());
         notification.setOuterid(outerid);
         notification.setNotifier(comment.getCommentator());
         notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
-        notification.setReceiver(commentator);
+        notification.setReceiver(receiver);
         notification.setNotifierName(notifierName);
         notification.setOuterTitle(outerTitle);
         notificationMapper.insert(notification);

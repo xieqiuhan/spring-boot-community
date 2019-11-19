@@ -98,4 +98,7 @@
     display: inline-block;
     margin-top:7px;
 }
+.tab-content{
+    cursor: pointer;
+}
 

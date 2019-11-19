@@ -103,12 +103,12 @@
             <div class="media" >
                 <div class="media-left" >
                     <a href="#">
-                        <img class="media-object img-rounded" th:src="${questions.user.avatarUrl}">
+                        <img class="media-object img-rounded" th:src="${session.user != null ? session.user.avatarUrl : '/static/images/default-avatural.png'}">
                     </a>
                 </div>
                 <div class="media-body">
                     <h6 >
-                        <span  th:text="${questions.user.name}"></span>
+                        <span  th:text="${session.user != null ? session.user.name :'匿名用户'}"></span>
                     </h6>
                 </div>
             </div>
