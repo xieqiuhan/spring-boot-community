@@ -101,4 +101,10 @@
 .tab-content{
     cursor: pointer;
 }
+.footer{
+    width: 32%;
+    color: gray;
+    padding: 10px 20px;
+    margin-left: 34%;
+}
 

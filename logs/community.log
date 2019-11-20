@@ -1,0 +1,38 @@
+2019-11-20 10:53:14.688  INFO 19332 --- [restartedMain] cn.edith.demo.community.DemoApplication  : Starting DemoApplication on SZ-BSDK2X2 with PID 19332 (C:\Users\Exie\Desktop\SpringBoot-edith\community\target\classes started by exie in C:\Users\Exie\Desktop\SpringBoot-edith\community)
+2019-11-20 10:53:14.692  INFO 19332 --- [restartedMain] cn.edith.demo.community.DemoApplication  : No active profile set, falling back to default profiles: default
+2019-11-20 10:53:14.731  INFO 19332 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-11-20 10:53:14.741  INFO 19332 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-11-20 10:53:15.838  INFO 19332 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-11-20 10:53:15.853  INFO 19332 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-11-20 10:53:15.853  INFO 19332 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-11-20 10:53:16.041  INFO 19332 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-11-20 10:53:16.041  INFO 19332 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1300 ms
+2019-11-20 10:53:17.004  INFO 19332 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-11-20 10:53:17.045  INFO 19332 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-11-20 10:53:17.048  INFO 19332 --- [restartedMain] cn.edith.demo.community.DemoApplication  : Started DemoApplication in 2.652 seconds (JVM running for 3.646)
+2019-11-20 10:53:23.006  INFO 19332 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-11-20 10:53:23.006  INFO 19332 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-11-20 10:53:23.010  INFO 19332 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2019-11-20 10:53:23.059  INFO 19332 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-11-20 10:53:23.156  INFO 19332 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-11-20 10:53:23.161 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.Q.countBySearch                : ==>  Preparing: select count(*) from QUESTION 
+2019-11-20 10:53:23.173 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.Q.countBySearch                : ==> Parameters: 
+2019-11-20 10:53:23.182 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.Q.countBySearch                : <==      Total: 1
+2019-11-20 10:53:23.185 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.Q.selectBySearch               : ==>  Preparing: select * from QUESTION order by gmt_create desc limit ?,? 
+2019-11-20 10:53:23.187 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.Q.selectBySearch               : ==> Parameters: 1(Integer), 5(Integer)
+2019-11-20 10:53:23.192 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.Q.selectBySearch               : <==      Total: 5
+2019-11-20 10:53:23.193 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : ==>  Preparing: select ID, ACCOUNT_ID, NAME, TOKEN, GMT_CREATE, GMT_MODIFIED, AVATAR_URL from USER where ID = ? 
+2019-11-20 10:53:23.194 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : ==> Parameters: 354(Long)
+2019-11-20 10:53:23.195 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : <==      Total: 1
+2019-11-20 10:53:23.201 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : ==>  Preparing: select ID, ACCOUNT_ID, NAME, TOKEN, GMT_CREATE, GMT_MODIFIED, AVATAR_URL from USER where ID = ? 
+2019-11-20 10:53:23.202 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : ==> Parameters: 322(Long)
+2019-11-20 10:53:23.203 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : <==      Total: 1
+2019-11-20 10:53:23.203 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : ==>  Preparing: select ID, ACCOUNT_ID, NAME, TOKEN, GMT_CREATE, GMT_MODIFIED, AVATAR_URL from USER where ID = ? 
+2019-11-20 10:53:23.203 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : ==> Parameters: 322(Long)
+2019-11-20 10:53:23.203 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : <==      Total: 1
+2019-11-20 10:53:23.204 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : ==>  Preparing: select ID, ACCOUNT_ID, NAME, TOKEN, GMT_CREATE, GMT_MODIFIED, AVATAR_URL from USER where ID = ? 
+2019-11-20 10:53:23.204 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : ==> Parameters: 322(Long)
+2019-11-20 10:53:23.204 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : <==      Total: 1
+2019-11-20 10:53:23.205 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : ==>  Preparing: select ID, ACCOUNT_ID, NAME, TOKEN, GMT_CREATE, GMT_MODIFIED, AVATAR_URL from USER where ID = ? 
+2019-11-20 10:53:23.205 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : ==> Parameters: 322(Long)
+2019-11-20 10:53:23.205 DEBUG 19332 --- [http-nio-8080-exec-1] c.e.d.c.m.UserMapper.selectByPrimaryKey  : <==      Total: 1

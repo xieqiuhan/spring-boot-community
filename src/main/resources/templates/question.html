@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<div th:insert="navigation :: nav"></div>
+<div th:insert="~{navigation :: nav}"></div>
 
 <div class="container-fluid main profile">
     <div class="row">
@@ -154,7 +154,7 @@
         </div>
     </div>
 </div>
-
+<div th:insert="~{footer :: foot}"></div>
 
 
 </body>

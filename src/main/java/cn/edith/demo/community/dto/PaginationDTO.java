@@ -18,6 +18,69 @@ public class PaginationDTO<T>{
     private List<Integer> pages = new ArrayList<>();
     private Integer totalPage;
 
+    public List<T> getData() {
+        return data;
+    }
+
+    public void setData(List<T> data) {
+        this.data = data;
+    }
+
+    public Boolean getShowPrevious() {
+        return showPrevious;
+    }
+
+    public void setShowPrevious(Boolean showPrevious) {
+        this.showPrevious = showPrevious;
+    }
+
+    public Boolean getShowFirstPage() {
+        return showFirstPage;
+    }
+
+    public void setShowFirstPage(Boolean showFirstPage) {
+        this.showFirstPage = showFirstPage;
+    }
+
+    public Boolean getShowNext() {
+        return showNext;
+    }
+
+    public void setShowNext(Boolean showNext) {
+        this.showNext = showNext;
+    }
+
+    public Boolean getShowEndPage() {
+        return showEndPage;
+    }
+
+    public void setShowEndPage(Boolean showEndPage) {
+        this.showEndPage = showEndPage;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public List<Integer> getPages() {
+        return pages;
+    }
+
+    public void setPages(List<Integer> pages) {
+        this.pages = pages;
+    }
+
+    public Integer getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(Integer totalPage) {
+        this.totalPage = totalPage;
+    }
 
     public void setPagination(Integer totalPage, Integer page) {
         this.totalPage = totalPage;
